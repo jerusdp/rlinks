@@ -1,9 +1,3 @@
-#[macro_use]
-extern crate clap;
-extern crate env_logger;
-#[macro_use]
-extern crate log;
-
 use crate::{
     cli::{get_config, make_app, CommandConfig},
     error::RLinksError,
