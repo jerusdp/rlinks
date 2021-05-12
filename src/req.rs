@@ -1,9 +1,3 @@
-use std::{
-    collections::{HashMap, HashSet},
-    iter::FromIterator,
-    time::Duration,
-};
-
 use crate::{error::RLinksError, text::ColorsExt, url_fix::fix_malformed_url};
 use futures::{stream, StreamExt};
 use http::{header::USER_AGENT, StatusCode};
@@ -13,6 +7,12 @@ use isahc::{
     error::ErrorKind,
     prelude::*,
     AsyncBody, HttpClient, Request, Response,
+};
+use log::{debug, error, info};
+use std::{
+    collections::{HashMap, HashSet},
+    iter::FromIterator,
+    time::Duration,
 };
 
 use regex::Regex;
