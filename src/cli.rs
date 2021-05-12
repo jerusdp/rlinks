@@ -1,4 +1,4 @@
-use clap::{App, AppSettings, Arg, SubCommand};
+use clap::{crate_version, value_t, App, AppSettings, Arg, SubCommand};
 
 use crate::error::RLinksError;
 use regex::Regex;
