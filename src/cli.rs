@@ -1,4 +1,4 @@
-use clap::{crate_version, value_t, App, AppSettings, Arg, SubCommand};
+use clap::{App, AppSettings, Arg, SubCommand};
 
 use crate::error::RLinksError;
 use regex::Regex;
@@ -36,7 +36,7 @@ pub fn get_config(app: App) -> Result<CommandConfig, RLinksError> {
     let ignore_urls = subcommand_matches
         .value_of("ignore_urls")
         .map(|v| Regex::new(v).unwrap());
-    let url = value_t!(subcommand_matches.value_of("URL"), String)?;
+    let url = clap::value_t!(subcommand_matches.value_of("URL"), String)?;
     let timeout = subcommand_matches
         .value_of("timeout")
         .map_or_else(|| TIMEOUT_SECONDS, |val| val.parse().unwrap());
@@ -50,7 +50,7 @@ pub fn get_config(app: App) -> Result<CommandConfig, RLinksError> {
             url,
             user_agent,
             timeout,
-            output_file: value_t!(subcommand_matches.value_of("output"), String)?,
+            output_file: clap::value_t!(subcommand_matches.value_of("output"), String)?,
             ignore_urls,
         })),
         "check" => {
@@ -73,7 +73,7 @@ pub fn get_config(app: App) -> Result<CommandConfig, RLinksError> {
 
 pub fn make_app<'a, 'b>() -> App<'a, 'b> {
     App::new("Rusty Links")
-        .version(crate_version!())
+        .version(clap::crate_version!())
         .author("Jose Luis Ricon <jose@ricon.xyz>")
         .about("RLinks finds dead links in websites, or dumps scraped links to a file")
         .setting(AppSettings::SubcommandRequiredElseHelp)
