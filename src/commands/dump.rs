@@ -1,16 +1,11 @@
-use crate::{
-    cli::DumpConfig,
-    error::RLinksError,
-    req::{get_client, get_links_from_website},
-    url_fix::add_http,
-};
+use crate::{cli::DumpConfig, error::RLinksError, req, url_fix};
 use std::{collections::HashSet, fs::File, io::Write, path::Path, time::Duration};
 
 pub async fn dump_links(config: DumpConfig) -> Result<(), RLinksError> {
     println!("{:?}", config);
-    let client = get_client(Duration::from_secs(config.timeout));
-    let url = add_http(&config.url)?;
-    let links = get_links_from_website(
+    let client = req::get_client(Duration::from_secs(config.timeout));
+    let url = url_fix::add_http(&config.url)?;
+    let links = req::get_links_from_website(
         &client,
         &config.user_agent,
         &url,
