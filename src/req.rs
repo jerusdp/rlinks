@@ -29,6 +29,8 @@ fn get_status_code_kind(x: StatusCode) -> StatusCodeKind {
     match x {
         x if x.is_success() | x.is_redirection() => StatusCodeKind::Valid(x),
         x if x == StatusCode::METHOD_NOT_ALLOWED => StatusCodeKind::MethodNotAllowed(x),
+        // Accounting for the special case of LinkedIn returning 999.
+        x if x.as_str() == "999" => StatusCodeKind::Valid(x),
         x => StatusCodeKind::Fail(x),
     }
 }
